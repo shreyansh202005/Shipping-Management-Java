@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.mavenproject1;
+package com.mycompany.mavenproject1.onboarding;
 
-import com.mysql.cj.callback.UsernameCallback;
+import com.mycompany.mavenproject1.IActionResponse;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-
+import com.mycompany.mavenproject1.database.MySqlHelper;
 /**
  *
  * @author DELL

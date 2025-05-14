@@ -1,0 +1,44 @@
+// shipper
+ 1) product list
+ 2) delivery schedule
+ 3) delivery requests - accept/reject
+ 4)
+
+
+// receive monthly or dayws
+disue ise 
+
+
+
+// admin
+user management 
+vaid usr identify
+shipper/buyer
+approval ke bad product list honge
+
+deliveries list dekh sakta h 
+
+
+
+//payment
+product list unme cut ko include karega
+delivery time pr payment receive
+cutwise devide
+disputes - reverse(monthly payment - 10  day payment)
+store paymnt methd
+
+
+
+
+// user
+1) product list see
+2) product order
+3) address list
+4) User delivery accept/reject
+
+Multipleway 
+cod 
+debit card 
+credit 
+upi 
+payment success/ failure 

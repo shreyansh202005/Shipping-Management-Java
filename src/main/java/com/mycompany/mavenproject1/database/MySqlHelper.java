@@ -1,4 +1,4 @@
-package com.mycompany.mavenproject1;
+package com.mycompany.mavenproject1.database;
 
 // responsibility division
 import java.sql.Connection;
@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.mycompany.mavenproject1.IActionResponse;
+
+
 
 public class MySqlHelper {
 
@@ -80,7 +83,7 @@ public class MySqlHelper {
         this.communicator = r;
     }
 
-    void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
+   public void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
         String query = "insert into User("
                 + "name,email,password,type"
                 + ") values"
@@ -103,7 +106,7 @@ public class MySqlHelper {
     }
 
     // userLogin
-    void getPerticularUserWhere(String userName, String password) {
+    public void getPerticularUserWhere(String userName, String password) {
         final String loginQuery
                 = "select * from user "
                 + "where name=" + userName + " and "
