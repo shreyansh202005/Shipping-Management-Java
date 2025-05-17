@@ -5,6 +5,7 @@
 package com.mycompany.mavenproject1.onboarding;
 
 import com.mycompany.mavenproject1.IActionResponse;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -20,12 +21,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import com.mycompany.mavenproject1.database.MySqlHelper;
 
+import com.mycompany.mavenproject1.database.MySqlHelper;
+import com.mycompany.mavenproject1.utility.MyUtility;
 
 
 /**
- *
  * @author DELL
  */
 public class Login {
@@ -103,7 +104,8 @@ public class Login {
 
         if (isNameEmpty || isNameSmall) {
             // invalid name
-            JOptionPane.showMessageDialog(frame, "Please enter an valid name, must be > 3");
+            MyUtility.showErrorMessage(frame, "Please enter an valid name, must be > 3");// this will work same
+//            JOptionPane.showMessageDialog(frame, "Please enter an valid name, must be > 3");
             return;
         }
 

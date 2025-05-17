@@ -34,9 +34,13 @@ values ( 'samsung','Mobile'),
 select *from product;
 
 create table product_seller_relation(
-id int auto_increment,price varchar(255),
-seller_id int , product_id int,
-meta text, shipping_charge int ,primary key(id)
+id int auto_increment,
+price varchar(255),
+seller_id int ,
+product_id int,
+meta text,
+shipping_charge int ,
+primary key(id)
 );
 
 insert into product_seller_relation(price,seller_id,product_id,meta,
@@ -122,4 +126,8 @@ alter table product_seller_relation drop column dely_status;
 select *from product_seller_relation;
 
 select *from orders;
-desc orders; 
+desc orders;
+
+
+
+// ye he kya saari dekhna last vali

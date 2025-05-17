@@ -1,6 +1,7 @@
 package com.mycompany.mavenproject1.database;
 
 // responsibility division
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,8 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.mycompany.mavenproject1.IActionResponse;
 
+import com.mycompany.mavenproject1.IActionResponse;
 
 
 public class MySqlHelper {
@@ -83,7 +84,7 @@ public class MySqlHelper {
         this.communicator = r;
     }
 
-   public void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
+    public void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
         String query = "insert into User("
                 + "name,email,password,type"
                 + ") values"
@@ -128,5 +129,118 @@ public class MySqlHelper {
             e.printStackTrace();
         }
     }
+
+    // product related qureies below
+    public void createProductTable() {
+        String query = "create table if not exists product(" + // ok ok one more thing what if product table already exists so
+                "prod_id int auto_increment," +
+                "name varchar(100)," + //good
+                "description text," +
+                "primary key(prod_id)" +
+                ")";
+
+        try {
+            // iska matalab abhi try block me esa koi bhi code nahi he jo is exception ko throw kre
+            Statement statement = getConnection().createStatement();
+            // ab aa gya throw krne vala code
+            statement.execute(query);
+            statement.close();
+        } catch (SQLException e) {
+            // if exception thrown means something worng
+            // we are not handling that right now but if project gets bigger will handle it
+        }
+    }
+
+    /***
+     * this method will insert data into product
+     * name and description will be given to the method and this method will insert them to database
+     */
+    public void insertIntoProduct(String productName, String productDescription) {
+        String query = "insert into product("
+                + "name , description)value("
+                + "?,?)"
+                + "";
+
+        try {
+            PreparedStatement state = getConnection().prepareStatement(query);
+            // this prepare statement method is special coz it adds the params to query
+            state.setString(1, productName);
+            state.setString(2, productDescription);
+
+            // now our statement is complete so execute qurey
+            state.execute();
+            state.close();
+        } catch (SQLException e) {
+            // will handle it later if requried
+        }
+    }
+
+    /***
+     * Since seller is adding a produdct so the relation of product should be with seller
+     */
+    public void createProductSellerRelationshipTable() {
+        String qurey =
+                "create table if not exists product_seller_relation(" +
+                        "id int auto_increment," +
+                        "price int," +
+                        "seller_id int , " +
+                        "product_id int," +
+                        "meta text, " +
+                        "shipping_charge int ," +
+                        "primary key(id)" +
+                        ")";
+        try {
+            Statement state = getConnection().createStatement();
+            state.execute(qurey);
+            state.close();
+        } catch (SQLException e) {
+            // will handle later
+        }
+    }
+
+    /***
+     * This method will receive following param and insert them in productsellerrealation table
+     * @param price
+     * @param sellerID
+     * @param productID
+     * @param metaJsonIfAny put empty here if no data
+     * @param shippingCharge
+     */
+    public void insertIntoProductSellerRelationTable(
+            int price,
+            int sellerID,
+            int productID,
+            String metaJsonIfAny,
+            int shippingCharge
+    ) {
+        String query = "insert into product_seller_relation(" +
+                "price, seller_id,product_id,meta,shipping_charge) values(" +
+                "?,?,?,?,?)" +
+                "";
+        try {
+            // now see the difference between the function above and this one
+            // above i ve used the createstatement() and here prepare statement()
+            // both have specific usage here i have some dynamic values to put in query so i used preparestatement .
+            // in above i dont have any dynamic value to put in query so i used createstatement()
+            //ok first let me complete it
+            PreparedStatement state = getConnection().prepareStatement(query);
+            // now put dynamic data here
+            state.setInt(1,price);
+            state.setInt(2,sellerID);
+            state.setInt(3,productID);
+            state.setString(4,metaJsonIfAny);
+            state.setInt(5,shippingCharge);
+
+            // now my sattement ready to executed
+            state.execute();
+            state.close();
+        } catch (SQLException e) {
+            // no errors handled right now
+        }
+    }
+
+
+
+
 
 }
