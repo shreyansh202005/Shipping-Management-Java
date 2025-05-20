@@ -11,8 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.mycompany.mavenproject1.IActionResponse;
 
-
-
 public class MySqlHelper {
 
     public static final String TAG_SUCCESS = "SUCCESS";
@@ -66,6 +64,7 @@ public class MySqlHelper {
                 + "email varchar(150),"
                 + "password varchar(150),"
                 + "type enum('shipper', 'admin','user')"
+                + "approval_status enum('1','2','3')"// 1 approved , 2 unapproved, 3  admin no appro
                 + ")";
         try {
             Statement state = getConnection().createStatement();
@@ -83,18 +82,30 @@ public class MySqlHelper {
         this.communicator = r;
     }
 
-   public void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
+    public void createANewUser(String userName, String email, String password, String userType) { // id auto increment he to use nahi likhenge kr entry
         String query = "insert into User("
                 + "name,email,password,type"
                 + ") values"
-                + "(?, ?, ?,?)"
+                + "(?, ?, ?,?,?)"
                 + ""; //good? understood? so gya kya? koi ni me porri likh raha kal dekhte he 
+        final int STATUS_APPROVED = 1;       
+        final int STATUS_UNAPPROVED = 2;
+        final int STATUS_NO_APPROVAL_NEEDED = 3;
+
+        
+        int approvalStatus = STATUS_UNAPPROVED;
+        
+        if(userType.equals("admin")){
+            approvalStatus = STATUS_NO_APPROVAL_NEEDED;
+        }
+        
         try {
             PreparedStatement sta = getConnection().prepareStatement(query); // new thing prepareStatement vs createSTatement()ok
             sta.setString(1, userName);
             sta.setString(2, email);
             sta.setString(3, password);
             sta.setString(4, userType);
+            sta.setString(5, String.valueOf(approvalStatus));
             sta.executeUpdate();
 
             communicator.OnActionPerformed("Welcome, " + userName, TAG_SUCCESS);
@@ -128,5 +139,37 @@ public class MySqlHelper {
             e.printStackTrace();
         }
     }
-
+    
+    
+    
+    // seller
+    private void createProductTable(){
+        String query = "create table product("
+                + "id int auto_increment, "
+                + "name varchar(255),"
+                + "description varchar(255),"
+                + "primary key (id))";              
+        try{
+            Statement state = getConnection().createStatement();
+            state.execute(query);
+            state.close();
+        }catch(SQLException e){
+        e.printStackTrace();
+        } 
+    }
+    
+    public void insertProduct(String name ,String description){
+        String query = "insert into product("
+                + "name , description)value("
+                + "?,?)"
+                + "";
+        
+        try{
+          PreparedStatement state = getConnection().prepareStatement(query);  
+        }catch(Exception e){
+        }
+        
+                
+                
+    }
 }
